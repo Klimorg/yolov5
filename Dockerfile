@@ -11,8 +11,6 @@ COPY requirements.txt .
 RUN python -m pip install --upgrade pip
 RUN pip uninstall -y nvidia-tensorboard nvidia-tensorboard-plugin-dlprof
 RUN pip install --no-cache -r requirements.txt coremltools onnx gsutil notebook wandb>=0.12.2
-# RUN pip install --no-cache -U torch torchvision numpy
-# RUN pip install --no-cache torch==1.9.1+cu111 torchvision==0.10.1+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 
 # Create working directory
 RUN mkdir -p /usr/src/app
@@ -24,45 +22,10 @@ COPY . /usr/src/app
 # Downloads to user config dir
 ADD https://ultralytics.com/assets/Arial.ttf /root/.config/Ultralytics/
 
-COPY ./test ../test
+RUN mv ./test ../test
 
-COPY ./train ../train
+RUN mv ./train ../train
 
-COPY ./valid ../valid
+RUN mv ./valid ../valid
 
-COPY data.yaml ./data/
-# Set environment variables
-# ENV HOME=/usr/src/app
-
-# python train.py --img 1024 --batch 16 --epochs 2 --data data.yaml --weights yolov5s.pt
-# Usage Examples -------------------------------------------------------------------------------------------------------
-
-# Build and Push
-# t=ultralytics/yolov5:latest && sudo docker build -t $t . && sudo docker push $t
-
-# Pull and Run
-# t=ultralytics/yolov5:latest && sudo docker pull $t && sudo docker run -it --ipc=host --gpus all $t
-
-# Pull and Run with local directory access
-# t=ultralytics/yolov5:latest && sudo docker pull $t && sudo docker run -it --ipc=host --gpus all -v "$(pwd)"/datasets:/usr/src/datasets $t
-
-# Kill all
-# sudo docker kill $(sudo docker ps -q)
-
-# Kill all image-based
-# sudo docker kill $(sudo docker ps -qa --filter ancestor=ultralytics/yolov5:latest)
-
-# Bash into running container
-# sudo docker exec -it 5a9b5863d93d bash
-
-# Bash into stopped container
-# id=$(sudo docker ps -qa) && sudo docker start $id && sudo docker exec -it $id bash
-
-# Clean up
-# docker system prune -a --volumes
-
-# Update Ubuntu drivers
-# https://www.maketecheasier.com/install-nvidia-drivers-ubuntu/
-
-# DDP test
-# python -m torch.distributed.run --nproc_per_node 2 --master_port 1 train.py --epochs 3
+RUN mv data.yaml ./data/

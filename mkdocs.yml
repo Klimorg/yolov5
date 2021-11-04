@@ -1,0 +1,73 @@
+site_name: Documentation ECCO Project Flore totale
+site_author: Mathieu Klimczak
+dev_addr: "127.0.0.1:8001"
+theme:
+  name: material
+  logo: images/logo_blanc.svg
+  icon:
+    repo: fontawesome/brands/gitlab
+  language: fr
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/lightbulb
+        name: Basculer en mode sombre
+    - scheme: slate
+      primary: teal
+      accent: deep orange
+      toggle:
+        icon: material/lightbulb-outline
+        name: Basculer en mode clair
+
+# extra_css:
+#   - stylesheets/extra.css
+
+plugins:
+  - search:
+      lang: fr
+      default_handler: python
+      handlers:
+        python:
+          setup_commands:
+            - import sys
+          rendering:
+            show_source: true
+
+nav:
+  - Home: index.md
+  - Dockerfile: misc_config/docker.md
+  - Makefile: misc_config/make.md
+
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.inlinehilite
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: .
+  - def_list
+  - attr_list
+  - pymdownx.highlight:
+      linenums: true
+  - pymdownx.betterem:
+      smart_enable: all
+  # config pour latex
+  - pymdownx.arithmatex:
+      generic: true
+
+# config pour latex
+extra_javascript:
+  - javascripts/config.js
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
